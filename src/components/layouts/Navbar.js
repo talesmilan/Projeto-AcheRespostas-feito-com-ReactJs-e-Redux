@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Collapse,
@@ -21,8 +20,25 @@ import {
   Form
 } from 'reactstrap';
 import {NavLink} from 'react-router-dom'
+import ErrorMessages from './ErrorMessages';
 
-function Example(args) {
+function NavBar(args) {
+
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+    remember: false
+  })
+
+  const [errors, setErrors] = useState([])
+
+  const handleOnChange = (e) => {
+    const name = e.target.name
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    setData({...data, [name]: value})
+}
+
   const [isOpen, setIsOpen] = useState(false);
 
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false)
@@ -35,6 +51,16 @@ function Example(args) {
 
   const handleLogin = (e) => {
     e.preventDefault()
+
+    const err = []
+
+    if(data.username === "" || data.password === "") {
+        err.push("Você deve preencher todos os campos.")
+    }
+    setErrors(err)
+    if (err.length === 0) {
+
+    }
   }
 
   return (
@@ -51,13 +77,15 @@ function Example(args) {
               <DropdownToggle nav caret>
                 Tópicos
               </DropdownToggle>
-              <DropdownMenu right>
+              <DropdownMenu>
                 <DropdownItem>Informática</DropdownItem>
                 <DropdownItem>Culinária</DropdownItem>
                 <DropdownItem>Carreiras</DropdownItem>
                 <DropdownItem>Relacionamentos</DropdownItem>
                 <DropdownItem>Carros e Motos</DropdownItem>
                 <DropdownItem>Animais de Estimação</DropdownItem>
+                <DropdownItem>Bem Estar</DropdownItem>
+                <DropdownItem>Ciência</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
@@ -73,10 +101,10 @@ function Example(args) {
 
           <Nav className="my-auto" navbar>
             <NavItem>
-              <NavLink className="nav-link active" to="/register">Cadastrar</NavLink>
+              <NavLink className="nav-link" to="/register">Cadastrar</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="nav-link" onClick={modalLogin}>Login</NavLink>
+              <a className="nav-link loginButton" onClick={modalLogin}>Login</a>
             </NavItem>
           </Nav>
 
@@ -86,18 +114,19 @@ function Example(args) {
       <Modal isOpen={isModalLoginOpen} toggle={modalLogin} >
         <ModalHeader toggle={modalLogin}>Login</ModalHeader>
           <ModalBody>
+            <ErrorMessages errors={errors} />
             <Form onSubmit={handleLogin}>
               <FormGroup>
                 <Label htmlFor="username">Nome do usuário</Label>
-                <Input type="text" id="username" name="username" required />
+                <Input type="text" id="username" name="username" onChange={handleOnChange} value={data.username} required />
               </FormGroup>
               <FormGroup>
                 <Label htmlFor="password">Senha</Label>
-                <Input type="password" id="password" name="password" required/>
+                <Input type="password" id="password" name="password" onChange={handleOnChange} value={data.password} required/>
               </FormGroup>
               <FormGroup>
                 <Label check>
-                  <Input className='mx-2' type="checkbox" />
+                  <Input className='mx-2' type="checkbox" onChange={handleOnChange} name="remember" checked={data.remember} />
                     Se lembrar de mim?
                 </Label>
               </FormGroup>
@@ -110,4 +139,4 @@ function Example(args) {
   );
 }
 
-export default Example;
+export default NavBar;

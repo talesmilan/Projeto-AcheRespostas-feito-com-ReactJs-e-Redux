@@ -9,3 +9,6 @@ footer {
 .registerButton {
   margin-left: 60px;
 }
+.loginButton {
+  cursor: pointer;
+}

@@ -6,6 +6,7 @@ import ToAsk from "./pages/ToAsk"
 import Footer from "./layouts/Footer"
 import Register from "./pages/Register"
 import Contact from "./pages/Contact"
+import About from "./pages/About"
 
 const Main = () => {
     document.body.style = 'background: #ECEFF1;';
@@ -19,6 +20,7 @@ const Main = () => {
                     <Route path="/toask" element={<ToAsk />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/about" element={<About />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>
