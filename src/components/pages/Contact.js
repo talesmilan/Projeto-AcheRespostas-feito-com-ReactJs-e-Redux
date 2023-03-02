@@ -2,6 +2,8 @@ import { FormGroup, Form, Label, Input, Button, Card, CardBody, CardHeader } fro
 import { useState } from "react"
 import validator from 'validator'
 import ErrorMessages from "../layouts/ErrorMessages"
+import { baseUrl } from '../../shared/baseUrl'
+import axios from 'axios'
 
 const Contact = () => {
 
@@ -31,7 +33,19 @@ const Contact = () => {
 
         setErrors(err)
         if (err.length === 0) {
-    
+
+            const newMessage = {
+                name: data.name,
+                email: data.email,
+                reason: data.reason,
+                message: data.message
+            }
+
+            axios.post(baseUrl + "message", newMessage).then(response => {
+                alert("A sua mensagem foi enviada.")
+            }).catch(err => {
+                alert("A sua mensagem não pode ser enviada.")
+            })
         } else {
             window.scrollTo(0, 140)
         }

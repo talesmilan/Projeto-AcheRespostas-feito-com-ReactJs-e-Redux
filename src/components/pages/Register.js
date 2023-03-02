@@ -2,6 +2,8 @@ import {Card, CardBody, CardHeader, Form, FormGroup, Label, Input, Button} from 
 import { useState } from 'react'
 import ErrorMessages from '../layouts/ErrorMessages'
 import validator from 'validator'
+import { baseUrl } from '../../shared/baseUrl'
+import axios from 'axios'
 
 const Register = () => {
 
@@ -41,7 +43,19 @@ const Register = () => {
 
         setErrors(err)
         if (err.length === 0) {
-    
+            const newRegister = {
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                username: data.username,
+                checkPassword: data.checkPassword
+            }
+            axios.post(baseUrl + 'register', newRegister).then((response) => {
+                alert("Seu cadastro foi realizado!")
+            }).catch(err => {
+                alert("O seu cadastro não pode ser realizado.")
+            })
+
         } else {
             window.scrollTo(0, 140)
         }
