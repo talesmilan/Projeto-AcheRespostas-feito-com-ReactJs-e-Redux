@@ -7,9 +7,35 @@ import Footer from "./layouts/Footer"
 import Register from "./pages/Register"
 import Contact from "./pages/Contact"
 import About from "./pages/About"
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { addUser } from "../redux/login"
+import axios from 'axios'
+import { baseUrl } from "../shared/baseUrl"
 
 const Main = () => {
-    document.body.style = 'background: #ECEFF1;';
+    document.body.style = 'background: #ECEFF1;'
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const token = localStorage.getItem("user")
+        if(token != undefined) {
+            if(token !== "") {
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+                axios.get(baseUrl + "authorization", config).then(response => {
+                    console.log("Você está logado!")
+                    dispatch(addUser(token))
+                }).catch(err => console.log(err))
+            }
+        }
+
+
+    }, [])
+
+
     return (
         <div>
             <BrowserRouter>

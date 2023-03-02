@@ -21,6 +21,10 @@ import {
 } from 'reactstrap';
 import {NavLink} from 'react-router-dom'
 import ErrorMessages from './ErrorMessages';
+import axios from 'axios'
+import { baseUrl } from '../../shared/baseUrl';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, removeUser } from '../../redux/login';
 
 function NavBar(args) {
 
@@ -31,6 +35,10 @@ function NavBar(args) {
   })
 
   const [errors, setErrors] = useState([])
+
+  const dispatch = useDispatch()
+
+  const {token} = useSelector(rootReducer => rootReducer.loginReducer)
 
   const handleOnChange = (e) => {
     const name = e.target.name
@@ -49,6 +57,11 @@ function NavBar(args) {
     setIsModalLoginOpen(!isModalLoginOpen)  
   }
 
+  const logoutClicked = () => {
+    dispatch(removeUser())
+    localStorage.setItem('user', "")
+  }
+
   const handleLogin = (e) => {
     e.preventDefault()
 
@@ -59,7 +72,21 @@ function NavBar(args) {
     }
     setErrors(err)
     if (err.length === 0) {
-
+      const login = {
+        username: data.username,
+        password: data.password,
+        remember: data.remember
+      }
+      axios.post(baseUrl + "login", login).then(response => {
+        alert("Deu certo!")
+        if(response.data.token != undefined) {
+          dispatch(addUser(response.data.token))
+          localStorage.setItem('user', response.data.token)
+          modalLogin()
+        }
+      }).catch(err => {
+        alert("Deu errado!")
+      })
     }
   }
 
@@ -100,12 +127,20 @@ function NavBar(args) {
           </Nav>
 
           <Nav className="my-auto" navbar>
-            <NavItem>
-              <NavLink className="nav-link" to="/register">Cadastrar</NavLink>
-            </NavItem>
-            <NavItem>
-              <a className="nav-link loginButton" onClick={modalLogin}>Login</a>
-            </NavItem>
+            {token === "" && (
+              <NavItem>
+                <NavLink className="nav-link" to="/register">Cadastrar</NavLink>
+              </NavItem>
+            )}
+            {token === "" ? (
+              <NavItem>
+                <a className="nav-link loginButton" onClick={modalLogin}>Login</a>
+              </NavItem>
+            ) : (
+              <NavItem>
+              <a className="nav-link loginButton" onClick={logoutClicked}>Sair</a>
+              </NavItem>
+            )}
           </Nav>
 
         </Collapse>
