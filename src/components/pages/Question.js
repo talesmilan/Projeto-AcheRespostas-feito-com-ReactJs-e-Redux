@@ -9,15 +9,10 @@ import { useSelector } from "react-redux"
 const Question = () => {
 
     const params = useParams()
-
     const [question, setQuestion] = useState(undefined)
-
     const [answers, setAnswers] = useState([])
-
     const [errors, setErrors] = useState([])
-
     const {token} = useSelector(rootReducer => rootReducer.loginReducer)
-
     const [body, setBody] = useState("")
 
     const handleOnChange = (e) => {
@@ -51,7 +46,6 @@ const Question = () => {
                 }
             })
         }
-
     }
 
     useEffect(() => {
@@ -70,6 +64,7 @@ const Question = () => {
     if(question != undefined) {
         return (
             <div className="container">
+                {console.log(params)}
                 <Card className="m-sm-5 m-0 my-5">
                     <CardHeader><h3>{question.title}</h3></CardHeader>
                     <CardBody>
@@ -103,7 +98,6 @@ const Question = () => {
     } else {
         return (<div className="m-5 p-5"></div>)
     }
-
 }
 
 export default Question

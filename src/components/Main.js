@@ -13,6 +13,7 @@ import { addUser } from "../redux/login"
 import axios from 'axios'
 import { baseUrl } from "../shared/baseUrl"
 import Question from "./pages/Question"
+import Topic from "./pages/Topic"
 
 const Main = () => {
     document.body.style = 'background: #ECEFF1;'
@@ -49,6 +50,7 @@ const Main = () => {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/question/:id" element={<Question />} />
+                    <Route path="/topics/:topic/:page" element={<Topic />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>

@@ -4,6 +4,9 @@ import ErrorMessages from '../layouts/ErrorMessages'
 import axios from 'axios'
 import { baseUrl } from '../../shared/baseUrl'
 import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { addMessage } from "../../redux/messageSuccess"
 
 const ToAsk = () => {
 
@@ -14,6 +17,10 @@ const ToAsk = () => {
       })
 
     const [errors, setErrors] = useState([])
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
 
     const {token} = useSelector(rootReducer => rootReducer.loginReducer)
 
@@ -36,7 +43,9 @@ const ToAsk = () => {
                 headers: { Authorization: `Bearer ${token}` }
             }
             axios.post(baseUrl + "questions", newQuestion, config).then(response => {
-                alert("Sua pergunta foi postada com sucesso.")
+                navigate("/")
+                dispatch(addMessage("A sua pergunta foi postada com sucesso!"))
+                window.scrollTo(0, 140)
             }).catch(err => {
                 if(err.response.data.err != undefined) {
                     const error = []

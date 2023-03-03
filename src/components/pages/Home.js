@@ -24,7 +24,7 @@ const Home = () => {
                 <SuccessMessages time={10000} />
                 {questions.rows.map(question => {
                     return (
-                        <Card className="m-5">
+                        <Card className="m-sm-5 my-5">
                             <NavLink to={`/question/${question.id}`}>
                                 <CardHeader><h3>{question.title}</h3></CardHeader>
                             </NavLink>

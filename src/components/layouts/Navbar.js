@@ -114,14 +114,30 @@ function NavBar(args) {
                 Tópicos
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem>Informática</DropdownItem>
-                <DropdownItem>Culinária</DropdownItem>
-                <DropdownItem>Carreiras</DropdownItem>
-                <DropdownItem>Relacionamentos</DropdownItem>
-                <DropdownItem>Carros e Motos</DropdownItem>
-                <DropdownItem>Animais de Estimação</DropdownItem>
-                <DropdownItem>Bem Estar</DropdownItem>
-                <DropdownItem>Ciência</DropdownItem>
+                <NavLink className="nav-link m-0 p-0" to="/topics/informatica/1">
+                  <DropdownItem>Informática</DropdownItem>
+                </NavLink>
+                <NavLink className="nav-link m-0 p-0" to="/topics/culinaria/1">
+                  <DropdownItem>Culinária</DropdownItem>
+                </NavLink>
+                <NavLink className="nav-link m-0 p-0" to="/topics/carreiras/1">
+                  <DropdownItem>Carreiras</DropdownItem>
+                </NavLink>
+                <NavLink className="nav-link m-0 p-0" to="/topics/relacionamentos/1">
+                  <DropdownItem>Relacionamentos</DropdownItem>
+                </NavLink>
+                <NavLink className="nav-link m-0 p-0" to="/topics/carros%20e%20motos/1">
+                  <DropdownItem>Carros e Motos</DropdownItem>
+                </NavLink>
+                <NavLink className="nav-link m-0 p-0" to="/topics/animais%20de%20estimacao/1">
+                  <DropdownItem>Animais de Estimação</DropdownItem>
+                </NavLink>
+                <NavLink className="nav-link m-0 p-0" to="/topics/bem%20estar/1">
+                  <DropdownItem>Bem Estar</DropdownItem>
+                </NavLink>
+                <NavLink className="nav-link m-0 p-0" to="/topics/ciencia/1">
+                  <DropdownItem>Ciência</DropdownItem>
+                </NavLink>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
