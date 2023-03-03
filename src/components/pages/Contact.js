@@ -4,6 +4,9 @@ import validator from 'validator'
 import ErrorMessages from "../layouts/ErrorMessages"
 import { baseUrl } from '../../shared/baseUrl'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { addMessage } from "../../redux/messageSuccess"
 
 const Contact = () => {
 
@@ -13,6 +16,10 @@ const Contact = () => {
         reason: "",
         message: ""
       })
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
 
     const [errors, setErrors] = useState([])
 
@@ -42,9 +49,16 @@ const Contact = () => {
             }
 
             axios.post(baseUrl + "message", newMessage).then(response => {
-                alert("A sua mensagem foi enviada.")
+                navigate("/")
+                dispatch(addMessage("A sua mensagem foi enviada com sucesso!"))
+                window.scrollTo(0, 140)
             }).catch(err => {
-                alert("A sua mensagem não pode ser enviada.")
+                if(err.response.data.err != undefined) {
+                    const error = []
+                    error.push(err.response.data.err)
+                    setErrors(error)
+                    window.scrollTo(0, 140)
+                }
             })
         } else {
             window.scrollTo(0, 140)

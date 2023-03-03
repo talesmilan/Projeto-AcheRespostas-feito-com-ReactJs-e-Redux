@@ -4,6 +4,9 @@ import ErrorMessages from '../layouts/ErrorMessages'
 import validator from 'validator'
 import { baseUrl } from '../../shared/baseUrl'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { addMessage } from "../../redux/messageSuccess"
 
 const Register = () => {
 
@@ -17,6 +20,10 @@ const Register = () => {
 
     const [errors, setErrors] = useState([])
     
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
+
     const handleRegister = (e) => {
         e.preventDefault()
         const err = []
@@ -51,9 +58,16 @@ const Register = () => {
                 checkPassword: data.checkPassword
             }
             axios.post(baseUrl + 'register', newRegister).then((response) => {
-                alert("Seu cadastro foi realizado!")
+                navigate("/")
+                dispatch(addMessage("O seu cadastro foi realizado com sucesso!"))
+                window.scrollTo(0, 140)
             }).catch(err => {
-                alert("O seu cadastro não pode ser realizado.")
+                if(err.response.data.err != undefined) {
+                    const error = []
+                    error.push(err.response.data.err)
+                    setErrors(error)
+                    window.scrollTo(0, 140)
+                }
             })
 
         } else {
@@ -96,7 +110,7 @@ const Register = () => {
                             <div className='col-12'><Label for="checkPassword">Confirmar Senha</Label></div>
                             <div className='col-12'><Input type="password" id="checkPassword" name="checkPassword" placeholder="Digite novamente sua senha" onChange={handleOnChange} value={data.checkPassword} required/></div>
                         </FormGroup>
-                        <Button className='bg-primary registerButton col-lg-2 col-sm-3 col-5 my-2' type="submit">Cadastrar</Button>
+                        <Button className='bg-primary col-lg-3 col-sm-3 col-5 my-2' type="submit">Cadastrar</Button>
                     </Form>
                 </CardBody>
             </Card>

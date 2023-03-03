@@ -25,6 +25,8 @@ import axios from 'axios'
 import { baseUrl } from '../../shared/baseUrl';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../../redux/login';
+import { useNavigate } from "react-router-dom"
+import { addMessage } from "../../redux/messageSuccess"
 
 function NavBar(args) {
 
@@ -37,6 +39,8 @@ function NavBar(args) {
   const [errors, setErrors] = useState([])
 
   const dispatch = useDispatch()
+
+  const navigate = useNavigate()
 
   const {token} = useSelector(rootReducer => rootReducer.loginReducer)
 
@@ -78,14 +82,19 @@ function NavBar(args) {
         remember: data.remember
       }
       axios.post(baseUrl + "login", login).then(response => {
-        alert("Deu certo!")
+        navigate("/")
+        dispatch(addMessage("O seu login foi realizado com sucesso!"))
         if(response.data.token != undefined) {
           dispatch(addUser(response.data.token))
           localStorage.setItem('user', response.data.token)
           modalLogin()
         }
       }).catch(err => {
-        alert("Deu errado!")
+        if(err.response.data.err != undefined) {
+          const error = []
+          error.push(err.response.data.err)
+          setErrors(error)
+      }
       })
     }
   }

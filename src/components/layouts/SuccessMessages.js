@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addMessage } from "../redux/messageSuccess"
+import { addMessage } from "../../redux/messageSuccess"
 
 const FlashMessage = ({time}) => {
 
@@ -17,7 +17,7 @@ const FlashMessage = ({time}) => {
 
         return (
             <div>
-                { message != "" && (<div className="alert alert-success">{message}</div>)}
+                { message != "" && (<div className="alert alert-success mt-4">{message}</div>)}
             </div>
         )
 }
