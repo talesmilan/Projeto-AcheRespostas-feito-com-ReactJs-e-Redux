@@ -32,6 +32,7 @@ const Home = () => {
                                 <p>Tópico: {question.topics} -- Enviado por: {question.username}</p>
                                 <hr/>
                                 <p>{question.body.length > 350 ? question.body.substring(0, 350).concat('...') : question.body}</p>
+                                <NavLink to={`/question/${question.id}`}>Leia Mais</NavLink>
                             </CardBody>
                         </Card>
                     )

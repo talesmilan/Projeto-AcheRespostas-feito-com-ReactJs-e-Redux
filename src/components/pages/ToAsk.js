@@ -32,7 +32,6 @@ const ToAsk = () => {
                 topics: data.topics,
                 body: data.body
             }
-
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
             }

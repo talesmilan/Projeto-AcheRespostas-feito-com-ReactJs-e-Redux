@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux"
 import { addUser } from "../redux/login"
 import axios from 'axios'
 import { baseUrl } from "../shared/baseUrl"
+import Question from "./pages/Question"
 
 const Main = () => {
     document.body.style = 'background: #ECEFF1;'
@@ -47,6 +48,7 @@ const Main = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/question/:id" element={<Question />} />
                 </Routes>
                 <Footer />
             </BrowserRouter>
